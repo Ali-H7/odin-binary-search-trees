@@ -26,8 +26,9 @@ class Tree {
   }
 
   levelOrder(callback) {
-    const queue = [this.root];
+    if (!callback) throw new Error('Please provide a callback function !');
 
+    const queue = [this.root];
     while (queue.length !== 0) {
       const currentNode = queue.shift();
       const leftChild = currentNode.left;
@@ -39,6 +40,29 @@ class Tree {
     }
   }
 
+  preOrder(callback, node = this.root) {
+    if (!callback) throw new Error('Please provide a callback function !');
+    if (node === null) return null;
+    callback(node);
+    this.preOrder(callback, node.left);
+    this.preOrder(callback, node.right);
+  }
+
+  inOrder(callback, node = this.root) {
+    if (!callback) throw new Error('Please provide a callback function !');
+    if (node === null) return null;
+    this.inOrder(callback, node.left);
+    callback(node);
+    this.inOrder(callback, node.right);
+  }
+
+  postOrder(callback, node = this.root) {
+    if (!callback) throw new Error('Please provide a callback function !');
+    if (node === null) return null;
+    this.postOrder(callback, node.left);
+    this.postOrder(callback, node.right);
+    callback(node);
+  }
   insert(value) {
     const doesExist = this.find(value);
     if (doesExist) {
@@ -160,4 +184,4 @@ tree.insert(24);
 tree.remove(8);
 tree.remove(0);
 tree.prettyPrint(tree.root);
-tree.levelOrder(console.log);
+tree.postOrder(console.log);
