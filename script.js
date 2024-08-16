@@ -63,6 +63,7 @@ class Tree {
     this.postOrder(callback, node.right);
     callback(node);
   }
+
   insert(value) {
     const doesExist = this.find(value);
     if (doesExist) {
@@ -157,6 +158,35 @@ class Tree {
     return searchLeft || searchRight;
   }
 
+  height(node = this.root, count = -1) {
+    if (node === null) return count;
+
+    count++;
+    const leftHeight = this.height(node.left, count);
+    const rightHeight = this.height(node.right, count);
+
+    if (leftHeight >= rightHeight) {
+      return leftHeight;
+    } else {
+      return rightHeight;
+    }
+  }
+
+  depth(node) {
+    function depthHelper(value, node, count = -1) {
+      if (node === null) return null;
+      count++;
+      if (node.data === value) return count;
+      const searchLeft = depthHelper(value, node.left, count);
+      const searchRight = depthHelper(value, node.right, count);
+      return searchLeft || searchRight;
+    }
+
+    const nodeValue = node.data;
+    const count = depthHelper(nodeValue, this.root);
+    return count;
+  }
+
   prettyPrint(node, prefix = '', isLeft = true) {
     if (node === null) {
       return;
@@ -183,5 +213,7 @@ tree.insert(24);
 tree.insert(24);
 tree.remove(8);
 tree.remove(0);
+const node = tree.find(1);
 tree.prettyPrint(tree.root);
-tree.postOrder(console.log);
+console.log(tree.height());
+console.log(tree.depth(tree.root));
