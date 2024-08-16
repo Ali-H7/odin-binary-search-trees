@@ -165,7 +165,7 @@ class Tree {
     const leftHeight = this.height(node.left, count);
     const rightHeight = this.height(node.right, count);
 
-    if (leftHeight >= rightHeight) {
+    if (leftHeight > rightHeight) {
       return leftHeight;
     } else {
       return rightHeight;
@@ -185,6 +185,22 @@ class Tree {
     const nodeValue = node.data;
     const count = depthHelper(nodeValue, this.root);
     return count;
+  }
+
+  isBalanced() {
+    const leftHeight = this.height(this.root.left);
+    const rightHeight = this.height(this.root.right);
+    const diffrence = Math.abs(leftHeight - rightHeight);
+    return diffrence <= 1;
+  }
+
+  reblanace() {
+    const currentTree = [];
+    this.preOrder((node) => {
+      currentTree.push(node.data);
+    });
+    const sortedArray = [...new Set(currentTree)].sort((a, b) => a - b);
+    this.root = this.buildTree(sortedArray, 0, sortedArray.length - 1);
   }
 
   prettyPrint(node, prefix = '', isLeft = true) {
@@ -211,9 +227,18 @@ tree.insert(0);
 tree.insert(888);
 tree.insert(24);
 tree.insert(24);
+tree.insert(26);
+tree.insert(29);
+tree.insert(33);
+tree.insert(998);
+tree.insert(997);
+tree.insert(25);
 tree.remove(8);
 tree.remove(0);
 const node = tree.find(1);
 tree.prettyPrint(tree.root);
 console.log(tree.height());
-console.log(tree.depth(tree.root));
+console.log(tree.depth(node));
+console.log(tree.isBalanced());
+tree.reblanace();
+tree.prettyPrint(tree.root);
