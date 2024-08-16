@@ -203,7 +203,7 @@ class Tree {
     this.root = this.buildTree(sortedArray, 0, sortedArray.length - 1);
   }
 
-  prettyPrint(node, prefix = '', isLeft = true) {
+  prettyPrint(node = this.root, prefix = '', isLeft = true) {
     if (node === null) {
       return;
     }
@@ -221,24 +221,16 @@ class Tree {
   }
 }
 
-const tree = new Tree([1, 7, 4, 23, 8, 10000, 4, 3, 5, 7]);
-tree.insert(999);
-tree.insert(0);
-tree.insert(888);
-tree.insert(24);
-tree.insert(24);
-tree.insert(26);
-tree.insert(29);
-tree.insert(33);
-tree.insert(998);
-tree.insert(997);
-tree.insert(25);
-tree.remove(8);
-tree.remove(0);
-const node = tree.find(1);
-tree.prettyPrint(tree.root);
-console.log(tree.height());
-console.log(tree.depth(node));
+const tree = new Tree([1, 7, 4, 23, 8, 4, 3, 5, 7]);
+tree.prettyPrint();
+console.log(tree.isBalanced());
+tree.levelOrder(console.log);
+tree.insert(100);
+tree.insert(1100);
+tree.insert(120);
+tree.insert(555);
 console.log(tree.isBalanced());
 tree.reblanace();
-tree.prettyPrint(tree.root);
+console.log(tree.isBalanced());
+tree.prettyPrint();
+tree.levelOrder(console.log);
