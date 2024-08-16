@@ -16,7 +16,6 @@ class Tree {
     if (start > end) {
       return null;
     }
-    // const sortedArray = [...new Set(array)].sort((a, b) => a - b);
 
     const mid = Math.floor((start + end) / 2);
     const node = new Node(array[mid]);
@@ -27,6 +26,11 @@ class Tree {
   }
 
   insert(value) {
+    const doesExist = this.find(value);
+    if (doesExist) {
+      return console.log('The value is already inserted on the tree');
+    }
+
     const newNode = new Node(value);
     let currentNode = this.root;
     let lastNode = currentNode;
@@ -73,17 +77,13 @@ class Tree {
       return;
     }
 
-    //FIXME make sure only when it has one child it get removed
-    // remove a node when it has a single child
     const hasChild = node.left || node.right;
-    // if (hasChild) {
     if (parentNode.left && parentNode.left.data === value) {
       parentNode.left = hasChild;
       return;
     } else {
       parentNode.right = hasChild;
     }
-    // }
   }
 
   find(value, node = this.root) {
@@ -141,6 +141,8 @@ const tree = new Tree([1, 7, 4, 23, 8, 10000, 4, 3, 5, 7]);
 tree.insert(999);
 tree.insert(0);
 tree.insert(888);
+tree.insert(24);
+tree.insert(24);
 tree.remove(8);
 tree.remove(0);
 tree.prettyPrint(tree.root);
