@@ -25,6 +25,20 @@ class Tree {
     return node;
   }
 
+  levelOrder(callback) {
+    const queue = [this.root];
+
+    while (queue.length !== 0) {
+      const currentNode = queue.shift();
+      const leftChild = currentNode.left;
+      const rightChild = currentNode.right;
+      if (leftChild) queue.push(leftChild);
+      if (rightChild) queue.push(rightChild);
+
+      callback(currentNode);
+    }
+  }
+
   insert(value) {
     const doesExist = this.find(value);
     if (doesExist) {
@@ -146,3 +160,4 @@ tree.insert(24);
 tree.remove(8);
 tree.remove(0);
 tree.prettyPrint(tree.root);
+tree.levelOrder(console.log);
